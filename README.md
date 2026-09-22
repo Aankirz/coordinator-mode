@@ -1,11 +1,15 @@
-# coordinator-mode
+<p align="center">
+  <img src="docs/icon.svg" alt="coordinator-mode icon: a red C with a green tick" width="112">
+</p>
+
+<h1 align="center">coordinator-mode</h1>
 
 A [Claude Code](https://claude.com/claude-code) skill that turns one session into a **coordinator**: it writes phase briefs, spawns other Claude sessions as **builders** in visible terminal windows, reviews what they push against a checkable contract, sends back the gaps, and launches the next phase.
 
 The coordinator never writes project code. That is the whole point — you keep an independent reviewer that didn't write the thing it's reviewing.
 
 <p align="center">
-  <img src="docs/how-it-works.svg" alt="How coordinator mode works: you give the coordinator a plan; it writes a brief per phase for a builder session, checks the builder's work itself, sends gaps back until it passes, then starts the next phase from the approved work." width="100%">
+  <img src="docs/how-it-works.svg" alt="How coordinator mode works: the coordinator sends a brief to builder sessions, which write the code and send the work back. The coordinator checks it: next phase if it passes, fix it if not. The coordinator never writes code." width="100%">
 </p>
 
 ## Install
