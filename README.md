@@ -32,6 +32,7 @@ npx coordinator-mode --project  # installs to ./.claude/skills/ for this repo on
 
 ```bash
 git clone https://github.com/Aankirz/coordinator-mode
+mkdir -p ~/.claude/skills
 cp -r coordinator-mode/skills/coordinator-mode ~/.claude/skills/
 ```
 
@@ -51,7 +52,7 @@ Or: "spawn a builder for phase 2", "review the builder's work", "launch phase 3"
 |---|---|
 | `~/.claude/skills/` (npx or manual) | `~/.claude/skills/coordinator-mode/spawn-builder.sh` |
 | `--project` | `./.claude/skills/coordinator-mode/spawn-builder.sh` |
-| plugin | `~/.claude/plugins/marketplaces/coordinator-mode/skills/coordinator-mode/spawn-builder.sh` |
+| plugin | a versioned cache directory; ask the coordinator to print `${CLAUDE_SKILL_DIR}` rather than guessing |
 
 It opens a visible terminal window running a Claude session and prints the session id so you can `claude --resume <id>` later. The id means the launch was *requested*; confirm the builder with `ListAgents`. A relative `--brief` path resolves against `--cwd`.
 

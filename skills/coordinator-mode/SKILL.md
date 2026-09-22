@@ -34,7 +34,8 @@ Ask the owner for these, or infer them and state your assumption:
 | Where briefs live | `docs/phases/` |
 | Builder model | `opus` (recommended; the owner can pick another) |
 | Check command (the gate) | whatever the repo's CI/`Makefile`/`package.json` runs |
-| Branch policy | ask — direct-to-main vs PR-per-phase changes the review |
+| Branch policy | ask — direct-to-main vs PR-per-phase changes the review and the hand-off |
+| Claude Code version | `claude --version` ≥ v2.1.236 for coordinator and builders (messaging needs v2.1.224, idle notices v2.1.236) |
 | Terminal | auto-detected; `BUILDER_TERMINAL` overrides |
 
 ## Spawning a builder
@@ -63,6 +64,27 @@ run. An unknown or missing terminal exits non-zero.
   but isn't: empty config values, missing scripts, uncommitted changes.
 - **Give the owner the session id** so they can `claude --resume <id>`.
 
+## Builder lifecycle
+
+1. **Before the first spawn**, run `/list-agents`. If it isn't recognized, this
+   session has no cross-session messaging: stop and tell the owner (version,
+   provider, or `crossSessionInbound` setting).
+2. **Spawn with a name**: `--name phase-2`. The builder shows up in `ListAgents`
+   under that name.
+3. **Handshake.** Every brief tells the builder to send the coordinator
+   `READY phase-N` with `SendMessage` before it starts work. Name the
+   coordinator session in the brief so the builder can find it. No READY, no
+   active builder.
+4. **Completion.** The builder sends `DONE phase-N` with its hand-off report
+   (commits, branch or PR, "Done when" status) to the coordinator. Also
+   subscribe with `SendMessage`'s `notify_when_idle` so you hear if it goes
+   idle or exits without reporting. That notice fires once and expires after
+   12 hours.
+5. **Recovery.** If the builder isn't in `ListAgents` within a few minutes of
+   spawning, or it exits before `DONE`: check the window, then ask the owner
+   whether to `claude --resume <id>` it or respawn. A respawn starts with no
+   context, so hand it what the dead session had already pushed.
+
 ## Reviewing a builder's work
 
 A builder's ✅ is a claim, not evidence. Read the hand-off report, then verify
@@ -86,8 +108,18 @@ the builder, or the environment.
 
 ## Act without asking
 
-Inside the loop, move. Do not ask permission between your own steps — when a
-review passes, launch the next phase, then report what you did.
+Inside the loop, move. Do not ask permission between your own steps, then
+report what you did.
+
+**When a review passes, the next phase starts from the approved work,**
+never from a base that lacks it:
+
+- **Direct-to-main:** the reviewed commits are already on `main`. Launch.
+- **PR-per-phase:** merge the PR if the owner's branch policy lets you,
+  otherwise ask the owner to merge it. Launch the next builder only once its
+  base branch contains that merge. If the owner wants to move on before the
+  merge, branch the next phase from the approved PR branch and say so in the
+  brief.
 
 Stop and ask for: anything in the project's decisions log, anything that spends
 money, anything outside the current phase's scope, and **anything a builder's
@@ -119,6 +151,9 @@ One file per phase. It must contain:
 - **The branch policy** — where to push and what to do first (e.g.
   `git pull --rebase` before every push).
 - **The OWNER NEEDED protocol.**
+- **The messaging protocol**: the coordinator's session name, `READY phase-N`
+  before starting, `DONE phase-N` plus the hand-off report when finished.
+- **The starting point**: the branch or commit this phase builds on.
 
 Keep a phase to what one builder finishes and hands off cleanly. More than
 about a day of work → split it.

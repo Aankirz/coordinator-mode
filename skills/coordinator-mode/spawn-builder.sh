@@ -1,16 +1,17 @@
 #!/usr/bin/env bash
 # Spawn a Claude builder session in a new, visible terminal window.
-# Usage: spawn-builder.sh [--cwd DIR] [--model M] [--brief FILE | --prompt TEXT]
+# Usage: spawn-builder.sh [--cwd DIR] [--model M] [--name NAME] [--brief FILE | --prompt TEXT]
 # Env:   BUILDER_TERMINAL  force a terminal (wezterm|ghostty|kitty|alacritty|iterm|terminal|gnome-terminal|konsole|xterm|tmux)
 #        BUILDER_CLAUDE_ARGS  extra args passed through to `claude`
 # Prints the session id on stdout so the coordinator can hand it to the owner.
 set -euo pipefail
 
-CWD="$PWD"; MODEL="opus"; PROMPT=""; BRIEF=""; DRY=""
+CWD="$PWD"; MODEL="opus"; NAME=""; PROMPT=""; BRIEF=""; DRY=""
 while [ $# -gt 0 ]; do
   case "$1" in
     --cwd) CWD="$2"; shift 2;;
     --model) MODEL="$2"; shift 2;;
+    --name) NAME="$2"; shift 2;;
     --brief) BRIEF="$2"; shift 2;;
     --prompt) PROMPT="$2"; shift 2;;
     --dry-run) DRY=1; shift;;
@@ -26,12 +27,13 @@ fi
 [ -d "$CWD" ] || { echo "--cwd is not a directory: $CWD" >&2; exit 2; }
 
 SID="$(uuidgen | tr 'A-Z' 'a-z')"
+NAME="${NAME:-builder-${SID:0:8}}"
 SHELL_BIN="${SHELL:-/bin/bash}"
 
 # The command the new window runs. `exec $SHELL` keeps the window open afterwards
 # so the owner can read the transcript and resume.
-INNER=$(printf 'cd %q && claude --model %q --session-id %q %s %q; exec %q' \
-  "$CWD" "$MODEL" "$SID" "${BUILDER_CLAUDE_ARGS:-}" "$PROMPT" "$SHELL_BIN")
+INNER=$(printf 'cd %q && claude --model %q --session-id %q --name %q %s %q; exec %q' \
+  "$CWD" "$MODEL" "$SID" "$NAME" "${BUILDER_CLAUDE_ARGS:-}" "$PROMPT" "$SHELL_BIN")
 
 have() { command -v "$1" >/dev/null 2>&1; }
 # wezterm/ghostty ship as .app bundles on macOS and are often not on PATH.
@@ -100,5 +102,5 @@ OSA
              echo "attach with: tmux attach -t builder-${SID:0:8}" >&2;;
 esac
 
-echo "launch requested; confirm the builder with ListAgents before relying on it" >&2
+echo "launch requested for $NAME; confirm it with ListAgents before relying on it" >&2
 echo "$SID"
