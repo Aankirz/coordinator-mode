@@ -77,6 +77,10 @@ Nothing is hardcoded to one terminal, one OS, or one project.
 | **The gate** | The exact lint/type/test command to run before pushing |
 | **Branch policy** | Direct-to-main or PR-per-phase |
 | **OWNER NEEDED protocol** | How a builder escalates a check only a human can run |
+| **Messaging protocol** | The coordinator's session name, `READY phase-N`, `DONE phase-N` + hand-off report |
+| **Starting point** | The branch or commit the phase builds on |
+
+A complete, copyable example: [`examples/phase-2.md`](examples/phase-2.md).
 
 ## Why it works
 
