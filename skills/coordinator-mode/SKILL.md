@@ -35,7 +35,7 @@ Ask the owner for these, or infer them and state your assumption:
 | Builder model | `opus` (recommended; the owner can pick another) |
 | Check command (the gate) | whatever the repo's CI/`Makefile`/`package.json` runs |
 | Branch policy | ask — direct-to-main vs PR-per-phase changes the review and the hand-off |
-| Claude Code version | `claude --version` ≥ v2.1.236 for coordinator and builders (messaging needs v2.1.224, idle notices v2.1.236) |
+| Claude Code version | `claude --version` ≥ v2.1.236 for coordinator and builders (messaging needs v2.1.224, idle notices v2.1.236; on Bedrock, Vertex, Foundry, Claude Platform on AWS, or with feature-flag fetching off, v2.1.248) |
 | Terminal | auto-detected; `BUILDER_TERMINAL` overrides |
 
 ## Spawning a builder
@@ -80,8 +80,12 @@ run. An unknown or missing terminal exits non-zero.
    subscribe with `SendMessage`'s `notify_when_idle` so you hear if it goes
    idle or exits without reporting. That notice fires once and expires after
    12 hours.
-5. **Recovery.** If the builder isn't in `ListAgents` within a few minutes of
-   spawning, or it exits before `DONE`: check the window, then ask the owner
+5. **Recovery.** If the builder is in `ListAgents` but sends no `READY` within
+   a few minutes, look at its window before anything else: a permission
+   prompt, a refused send, or `crossSessionInbound` set to `refuse` or `hold`.
+   Tell the owner what you see; don't respawn over a session that is only
+   blocked. If it isn't in `ListAgents` within a few minutes of spawning, or
+   it exits before `DONE`: check the window, then ask the owner
    whether to `claude --resume <id>` it or respawn. A respawn starts with no
    context, so hand it what the dead session had already pushed.
 
