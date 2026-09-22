@@ -4,13 +4,9 @@ A [Claude Code](https://claude.com/claude-code) skill that turns one session int
 
 The coordinator never writes project code. That is the whole point — you keep an independent reviewer that didn't write the thing it's reviewing.
 
-```
-write phase brief  →  spawn builder session  →  builder pushes
-       ↑                                              ↓
-       └──  launch next phase  ←  review passes  ←  review vs "Done when"
-                                      ↑                 ↓
-                                      └──  send gaps  ──┘
-```
+<p align="center">
+  <img src="docs/how-it-works.svg" alt="How coordinator mode works: you give the coordinator a plan; it writes a brief per phase for a builder session, checks the builder's work itself, sends gaps back until it passes, then starts the next phase from the approved work." width="100%">
+</p>
 
 ## Install
 
