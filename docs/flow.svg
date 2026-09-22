@@ -27,17 +27,9 @@ text { font-family: "Caveat", "Bradley Hand", "Chalkboard SE", cursive; }
 <pattern id="hatch-green" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(50)"><line x1="0" y1="0" x2="0" y2="8" stroke="#3f7d3a" stroke-width="2.2" opacity="0.28"/></pattern>
 </defs>
 <rect width="1200" height="420" fill="#fbf6ea" rx="0"/>
-<rect width="1200" height="420" filter="url(#paper)" rx="0"/>
+<rect width="1200" height="420" filter="url(#paper)"/>
 <g transform="translate(0 -100)">
-<g transform="translate(330.0 300.0) scale(0.862) translate(-120 -126)">
-<path d="M62,82 L50,34 L98,62 Q120,56 142,62 L190,34 L178,82 Q200,124 186,172 Q170,216 120,218 Q70,216 54,172 Q40,124 62,82 Z" fill="#c2452d" filter="url(#crayon)"/>
-<path d="M120,86 Q150,70 170,92 Q186,120 168,150 Q150,178 120,196 Q90,178 72,150 Q54,120 70,92 Q90,70 120,86 Z" fill="#fbf6ea"/>
-<circle cx="90" cy="116" r="22" fill="#fbf6ea" stroke="#3b3a36" stroke-width="7" filter="url(#crayon)"/>
-<circle cx="100" cy="118" r="10" fill="#3b3a36" filter="url(#crayon)"/>
-<circle cx="150" cy="116" r="22" fill="#fbf6ea" stroke="#3b3a36" stroke-width="7" filter="url(#crayon)"/>
-<circle cx="160" cy="118" r="10" fill="#3b3a36" filter="url(#crayon)"/>
-<path d="M104,150 L117,164 L142,136" fill="none" stroke="#3f7d3a" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" filter="url(#crayon)"/>
-</g>
+<g transform="translate(330.0 320.0) scale(2.300) translate(-60 -60)"><circle cx="60" cy="44" r="21" fill="none" stroke="#e5482b" stroke-width="10"/></g>
 <text x="330" y="450" font-size="36" fill="#c2452d" font-weight="700" text-anchor="middle">coordinator</text>
 <text x="330" y="482" font-size="24" fill="#3b3a36" font-weight="500" text-anchor="middle">never writes code</text>
 <rect x="860" y="196" width="180" height="96" fill="#fbf6ea"/>
