@@ -1,0 +1,8 @@
+{
+  "name": "coordinator-mode",
+  "description": "Run one Claude session as a coordinator that spawns, reviews, and re-tasks other Claude sessions as builders across a multi-phase build.",
+  "version": "1.0.0",
+  "author": { "name": "Aankirz" },
+  "homepage": "https://github.com/Aankirz/coordinator-mode",
+  "license": "MIT"
+}

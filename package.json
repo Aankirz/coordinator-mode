@@ -1,0 +1,11 @@
+{
+  "name": "coordinator-mode",
+  "version": "1.0.0",
+  "description": "A Claude Code skill: run one session as a coordinator that spawns, reviews, and re-tasks other Claude sessions as builders across a multi-phase build.",
+  "bin": { "coordinator-mode": "bin/install.js" },
+  "files": ["bin", "skills", "README.md", "LICENSE"],
+  "keywords": ["claude", "claude-code", "skill", "agent", "orchestration", "multi-agent", "coordinator"],
+  "license": "MIT",
+  "repository": { "type": "git", "url": "git+https://github.com/Aankirz/coordinator-mode.git" },
+  "engines": { "node": ">=18" }
+}

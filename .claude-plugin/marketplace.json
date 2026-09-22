@@ -1,0 +1,11 @@
+{
+  "name": "coordinator-mode",
+  "owner": { "name": "Aankirz" },
+  "plugins": [
+    {
+      "name": "coordinator-mode",
+      "source": "./",
+      "description": "Coordinator/builder workflow: one Claude session orchestrates supervised builder sessions in visible terminal windows."
+    }
+  ]
+}
