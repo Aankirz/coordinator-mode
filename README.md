@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/icon.svg" alt="coordinator-mode icon: a red C with a green tick" width="112">
+  <img src="docs/icon.svg" alt="coordinator-mode icon: a red owl watching the work, its beak a green tick" width="112">
 </p>
 
 <h1 align="center">coordinator-mode</h1>

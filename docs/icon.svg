@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" role="img" aria-labelledby="title desc">
 <title id="title">coordinator mode icon</title>
-<desc id="desc">A bold red letter C with a green tick coming out of its opening.</desc>
+<desc id="desc">A red owl with big watching eyes; its beak is a green tick.</desc>
 <defs>
 <filter id="pencil" filterUnits="userSpaceOnUse" x="0" y="0" width="240" height="240">
   <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3" result="grain"/>
@@ -24,7 +24,14 @@
 <rect width="240" height="240" fill="#fbf6ea" rx="24"/>
 <rect width="240" height="240" filter="url(#paper)" rx="24"/>
 <g transform="translate(0 0)">
-<path d="M174.6,120.5 A66.7,66.7 0 1 1 127.5,60.2" fill="none" stroke="#c2452d" stroke-width="29.0" stroke-linecap="round" filter="url(#crayon)"/>
-<path d="M79.0,126.9 L105.1,153.0 L192.1,60.2" fill="none" stroke="#3f7d3a" stroke-width="23.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#crayon)"/>
+<g transform="translate(120.0 124.0) scale(1.000) translate(-120 -126)">
+<path d="M62,82 L50,34 L98,62 Q120,56 142,62 L190,34 L178,82 Q200,124 186,172 Q170,216 120,218 Q70,216 54,172 Q40,124 62,82 Z" fill="#c2452d" filter="url(#crayon)"/>
+<path d="M120,86 Q150,70 170,92 Q186,120 168,150 Q150,178 120,196 Q90,178 72,150 Q54,120 70,92 Q90,70 120,86 Z" fill="#fbf6ea"/>
+<circle cx="90" cy="116" r="22" fill="#fbf6ea" stroke="#3b3a36" stroke-width="7" filter="url(#crayon)"/>
+<circle cx="100" cy="118" r="10" fill="#3b3a36" filter="url(#crayon)"/>
+<circle cx="150" cy="116" r="22" fill="#fbf6ea" stroke="#3b3a36" stroke-width="7" filter="url(#crayon)"/>
+<circle cx="160" cy="118" r="10" fill="#3b3a36" filter="url(#crayon)"/>
+<path d="M104,150 L117,164 L142,136" fill="none" stroke="#3f7d3a" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" filter="url(#crayon)"/>
+</g>
 </g>
 </svg>
