@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/icon.svg" alt="coordinator-mode icon: a red owl watching the work, its beak a green tick" width="112">
+  <img src="docs/owl.svg" alt="coordinator-mode icon: a red owl watching the work, its beak a green tick" width="112">
 </p>
 
 <h1 align="center">coordinator-mode</h1>
@@ -9,7 +9,7 @@ A [Claude Code](https://claude.com/claude-code) skill that turns one session int
 The coordinator never writes project code. That is the whole point — you keep an independent reviewer that didn't write the thing it's reviewing.
 
 <p align="center">
-  <img src="docs/how-it-works.svg" alt="How coordinator mode works: the coordinator sends a brief to builder sessions, which write the code and send the work back. The coordinator checks it: next phase if it passes, fix it if not. The coordinator never writes code." width="100%">
+  <img src="docs/owl-flow.svg" alt="How coordinator mode works: the coordinator sends a brief to builder sessions, which write the code and send the work back. The coordinator checks it: next phase if it passes, fix it if not. The coordinator never writes code." width="100%">
 </p>
 
 ## Install
