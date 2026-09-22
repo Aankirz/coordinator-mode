@@ -14,18 +14,18 @@ write phase brief  →  spawn builder session  →  builder pushes
 
 ## Install
 
-**npx (one command, no clone):**
-
-```bash
-npx coordinator-mode            # installs to ~/.claude/skills/
-npx coordinator-mode --project  # installs to ./.claude/skills/ for this repo only
-```
-
 **As a Claude Code plugin:**
 
 ```
 /plugin marketplace add Aankirz/coordinator-mode
 /plugin install coordinator-mode
+```
+
+**npx** (not published to npm yet, so this doesn't work until it is):
+
+```bash
+npx coordinator-mode            # installs to ~/.claude/skills/
+npx coordinator-mode --project  # installs to ./.claude/skills/ for this repo only
 ```
 
 **Manual:**
@@ -45,11 +45,20 @@ Or: "spawn a builder for phase 2", "review the builder's work", "launch phase 3"
 
 ## Spawning builders
 
-`spawn-builder.sh` opens a real, visible terminal window running a Claude session, and prints its session id so you can `claude --resume <id>` later.
+`spawn-builder.sh` ships inside the skill folder, not your project. The coordinator calls it through `${CLAUDE_SKILL_DIR}`. To run it by hand, use its installed path:
+
+| Installed via | Script path |
+|---|---|
+| `~/.claude/skills/` (npx or manual) | `~/.claude/skills/coordinator-mode/spawn-builder.sh` |
+| `--project` | `./.claude/skills/coordinator-mode/spawn-builder.sh` |
+| plugin | `~/.claude/plugins/marketplaces/coordinator-mode/skills/coordinator-mode/spawn-builder.sh` |
+
+It opens a visible terminal window running a Claude session and prints the session id so you can `claude --resume <id>` later. The id means the launch was *requested*; confirm the builder with `ListAgents`. A relative `--brief` path resolves against `--cwd`.
 
 ```bash
-./spawn-builder.sh --cwd ~/code/myproject --model opus --brief docs/phases/phase-2.md
-./spawn-builder.sh --dry-run --prompt "build phase 1"   # show what it would run
+S=~/.claude/skills/coordinator-mode/spawn-builder.sh
+$S --cwd ~/code/myproject --model opus --brief docs/phases/phase-2.md
+$S --dry-run --prompt "build phase 1"   # show what it would run
 ```
 
 Auto-detects WezTerm, Ghostty, kitty, Alacritty, iTerm2, Terminal.app, gnome-terminal, konsole and xterm, and falls back to a detached tmux session. Override with `BUILDER_TERMINAL=kitty`. Extra Claude flags go in `BUILDER_CLAUDE_ARGS`.

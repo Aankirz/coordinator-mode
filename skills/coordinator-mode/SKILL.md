@@ -32,31 +32,35 @@ Ask the owner for these, or infer them and state your assumption:
 | Thing | Default if unstated |
 |---|---|
 | Where briefs live | `docs/phases/` |
-| Builder model | the strongest available (`opus`) |
+| Builder model | `opus` (recommended; the owner can pick another) |
 | Check command (the gate) | whatever the repo's CI/`Makefile`/`package.json` runs |
 | Branch policy | ask — direct-to-main vs PR-per-phase changes the review |
 | Terminal | auto-detected; `BUILDER_TERMINAL` overrides |
 
 ## Spawning a builder
 
-Builders are **local, visible, and in the foreground**. The owner watches them
-work. Never a background job, never a cloud session, never a worktree unless
-the owner asked.
+Builders are **local and visible**: each runs in its own terminal window the
+owner can watch. Never a cloud session, never a worktree unless the owner
+asked.
 
 ```bash
-./spawn-builder.sh --cwd ~/code/myproject --model opus --brief docs/phases/phase-2.md
-# prints the session id
+"${CLAUDE_SKILL_DIR}/spawn-builder.sh" --cwd ~/code/myproject --model opus --brief docs/phases/phase-2.md
+# prints the session id; a relative --brief resolves against --cwd
 ```
 
 The script auto-detects WezTerm, Ghostty, kitty, Alacritty, iTerm2,
-Terminal.app, gnome-terminal, konsole, xterm, and falls back to a detached
-tmux session. `--dry-run` shows what it would run.
+Terminal.app, gnome-terminal, konsole and xterm. With no GUI terminal it falls
+back to a detached tmux session: that's the one case with no window, so give
+the owner the `tmux attach` line it prints. `--dry-run` shows what it would
+run. An unknown or missing terminal exits non-zero.
 
 - **GUI terminals are often not on `$PATH`** (macOS `.app` bundles). The script
   looks inside `/Applications` for you.
-- **Use the strongest model for builders.** A weaker builder will hand back a
-  phase that looks finished and isn't — empty config values, missing scripts,
-  nothing committed — and you pay for it in review rounds.
+- **The printed session id means the launch was requested, not that the
+  builder is running.** Confirm it with `ListAgents` before you wait on it.
+- **Builder model:** `opus` is the recommended default. If the owner picks a
+  smaller model, expect to check more carefully for work that looks finished
+  but isn't: empty config values, missing scripts, uncommitted changes.
 - **Give the owner the session id** so they can `claude --resume <id>`.
 
 ## Reviewing a builder's work
@@ -77,7 +81,8 @@ A phase passes only when every "Done when" item is ✅, or is a 🧑 item the ow
 has cleared. 🧑 items tracked in parallel block only the phase that needs them.
 
 **If a third review round on the same phase still fails, stop and tell the
-owner.** Three rounds means the brief is wrong, not the builder.
+owner.** Say what keeps failing, and whether the cause looks like the brief,
+the builder, or the environment.
 
 ## Act without asking
 
@@ -120,9 +125,11 @@ about a day of work → split it.
 
 ## Traps
 
-**A running builder cannot see a skill added after it started.** Ask the owner
-to run `/reload-skills` in that builder's window — a peer message cannot run a
-slash command — then tell the builder to invoke it.
+**A new skill might not reach a running builder.** Claude Code picks up
+`SKILL.md` edits under existing personal or project skills directories during a
+session. A skills directory created after the builder started needs a restart,
+and plugin skills need `/reload-plugins`, which only the owner can run in that
+window. A peer message cannot run a slash command.
 
 **Never `pkill -f <project-name>`.** The pattern matches the builder sessions
 themselves and kills them mid-phase. Kill by PID only.
