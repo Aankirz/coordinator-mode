@@ -1,6 +1,6 @@
 ---
 name: coordinator-mode
-description: Use when one Claude session should drive a multi-phase build by spawning other Claude sessions as builders instead of writing the code itself. Triggers on "coordinator mode", "orchestrate the phases", "spawn a builder", "launch phase N", "review the builder's work", or any request to split a large project across several supervised agent sessions.
+description: Use when the user asks for coordinator mode: one Claude session writes a brief per phase, spawns separate Claude Code sessions as builders in their own terminal windows, and reviews each push before launching the next phase. Triggers on "coordinator mode", "orchestrate the phases", "spawn a builder", "launch phase N", "review the builder's work". Not for subagents or the Task tool, parallel work inside one session, or general questions about multi-agent setups.
 ---
 
 # Coordinator mode
